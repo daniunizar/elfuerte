@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Auth::routes();
-
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('main'); //En rojo: 1)la ruta del navegador, 2)el método del controlador, 3)el nombre de la ruta, para llamarla desde un controlador en los return view por ejemplo
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Auth::routes();
