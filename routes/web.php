@@ -12,7 +12,12 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('main'); //En rojo: 1)la ruta del navegador, 2)el método del controlador, 3)el nombre de la ruta, para llamarla desde un controlador en los return view por ejemplo
+//En rojo: 
+//1)la ruta del navegador, 
+//2)el método del controlador, 
+//3)el nombre de la ruta, para llamarla desde un controlador en los return view por ejemplo
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('main'); 
+Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupos');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
+
