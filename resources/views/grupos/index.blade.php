@@ -68,6 +68,7 @@
       <div class="modal-body">
       <form action="{{route('grupos.index')}}" method="POST" id="formularioGrupos" name="formularioGrupos">
           @csrf
+          <input type="text" id="id">
             <div class="form-group">
                 <label for="cantidad_total_visitantes">Cantidad Total de Visitantes</label>
                 <input type="number" class="form-control" id="cantidad_total_visitantes" name="cantidad_total_visitantes" aria-describedby="totalHelp" min=0 value=0>
@@ -133,8 +134,8 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary"id="btnCrear" name="btnCrear" data-target="#formularioGrupos">Registrar</button>
-        <button type="button" class="btn btn-primary">Editar</button>
+        <button type="submit" class="btn btn-primary" id="btnCrear" name="btnCrear" data-target="#formularioGrupos">Registrar</button>
+        <button type="button" class="btn btn-primary" id="btnActualizar" name="btnActualizar" data-target="#formularioGrupos">Actualizar</button>
       </div>
     </form>
     </div>
@@ -163,6 +164,37 @@
         $.ajax({
           type: "POST",
           url: "{{route('grupos.store')}}",       
+          data: datos,
+          success: function(){
+            $("#modal_grupos").modal('hide');
+          },
+          error: function(error){console.log("Ha ocurido un error: "+error)},
+          processData: false,  // tell jQuery not to process the data
+          contentType: false   // tell jQuery not to set contentType
+        });
+    }
+    document.getElementById("btnActualizar").addEventListener("click", fnUpdate);
+    function fnUpdate(e){
+        e.preventDefault();
+        var target = this.dataset.target;
+        var formulario = document.querySelector(target);
+        var cantidad_total_visitantes = $('#cantidad_total_visitantes').val();
+        var muj_men = $('#muj_men').val();
+        var muj_jov = $('#muj_jov').val();
+        var muj_adu = $('#muj_adu').val();
+        var muj_may = $('#muj_may').val();
+        var var_men = $('#var_men').val();
+        var var_jov = $('#var_jov').val();
+        var var_adu = $('#var_adu').val();
+        var var_may = $('#var_may').val();
+        var procedenciaInternacional = $('#procedenciaInternacional').val();
+        var procedencia = $('#procedencia').val();
+        var datos = new FormData(formularioGrupos); //metemos todos los datos del formulario en un FormData
+        var id = $('#id').val();
+        datos.append('id', id); //Incluimos la ID del grupo para poder actualizarlo
+        $.ajax({
+          type: "PATCH",
+          url: "{{url('/')}}/grupos/"+id,      
           data: datos,
           success: function(){
             $("#modal_grupos").modal('hide');

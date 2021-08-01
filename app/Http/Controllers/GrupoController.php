@@ -83,12 +83,24 @@ class GrupoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Grupo  $grupo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Grupo $grupo)
+    public function update(Request $request)
     {
-        //
+        dump("Hola");
+        $grupo = Grupo::find($request->id);
+        $grupo->cantidadTotalVisitantes = $request->get('cantidad_total_visitantes');
+        $grupo->Mujeres_Menores = $request->get('muj_men');
+        $grupo->Mujeres_Jovenes = $request->get('muj_jov');
+        $grupo->Mujeres_Adultas = $request->get('muj_adu');
+        $grupo->Mujeres_Mayores = $request->get('muj_may');
+        $grupo->Hombres_Menores = $request->get('var_men');
+        $grupo->Hombres_Jovenes = $request->get('var_jov');
+        $grupo->Hombres_Adultos = $request->get('var_adu');
+        $grupo->Hombres_Mayores = $request->get('var_may');
+        $grupo->ProcedenciaInternacional = 0;
+        $grupo->LugarProcedencia = $request->get('procedencia');
+        $grupo->update();
     }
 
     /**
