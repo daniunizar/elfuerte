@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 //2)el método del controlador, 
 //3)el nombre de la ruta, para llamarla desde un controlador en los return view por ejemplo
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('main'); 
-Route::get('/grupos', [App\Http\Controllers\GrupoController::class, 'index'])->name('grupos');
+Route::resource('grupos', 'App\Http\Controllers\GrupoController');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
