@@ -15,10 +15,12 @@ class GrupoController extends Controller
     public function index()
     {
         //Recuperamos los registros de grupos existentes en la BBDD
-        $grupos = Grupo::all();
+        //$grupos = Grupo::all(); Forma original, cogíamos todos los registros y los ordenaba de menos a más.
+        $grupos = Grupo::orderBy('fecha_visita', 'DESC')->get(); //De esta forma mostramos los registros ordenados por fecha de visita más reciente
         //Retornamos la vista a la que le pasamos por parámetro el listado de grupos para que nos lo muestre
         return view('grupos.index', ['listado' => $grupos]);
-        //return view('grupos.index')->with('listado', $grupos);
+        //return view('grupos.index')->with('listado', $grupos); Alternativa válida a la línea anterior
+        //PAGINAR O LIMITAR EL NÚMERO DE REGISTROS RECUPERADOS EN https://youtu.be/9DU7WLZeam8?t=3422 minuto 57
     }
 
     /**
@@ -28,7 +30,7 @@ class GrupoController extends Controller
      */
     public function create()
     {
-        //
+        return view('grupos.create');
     }
 
     /**
@@ -46,12 +48,16 @@ class GrupoController extends Controller
         $grupo->Mujeres_Jovenes = $request->get('muj_jov');
         $grupo->Mujeres_Adultas = $request->get('muj_adu');
         $grupo->Mujeres_Mayores = $request->get('muj_may');
-        $grupo->Hombres_Menores = $request->get('var_men');
-        $grupo->Hombres_Jovenes = $request->get('var_jov');
-        $grupo->Hombres_Adultos = $request->get('var_adu');
-        $grupo->Hombres_Mayores = $request->get('var_may');
+        $grupo->Varones_Menores = $request->get('var_men');
+        $grupo->Varones_Jovenes = $request->get('var_jov');
+        $grupo->Varones_Adultos = $request->get('var_adu');
+        $grupo->Varones_Mayores = $request->get('var_may');
         //$grupo->ProcedenciaInternacional = $request->get('procedenciaInternacional');
-        $grupo->ProcedenciaInternacional = 0;
+        if($request->get('procedenciaInternacional')!=null){
+            $grupo->ProcedenciaInternacional = true;
+        }else{
+            $grupo->ProcedenciaInternacional = false;
+        }
         $grupo->LugarProcedencia = $request->get('procedencia');
         $grupo->save();
         return redirect('/grupos');
@@ -74,9 +80,17 @@ class GrupoController extends Controller
      * @param  \App\Models\Grupo  $grupo
      * @return \Illuminate\Http\Response
      */
-    public function edit(Grupo $grupo)
+    public function edit($id)
     {
-        //
+        $grupo = Grupo::findOrFail($id); //Buscamos en la BBDD la info de ese grupo concreto a partir de su ID
+        $fecha_y_hora_visita = $grupo->fecha_visita;
+        $fecha_explotada = explode(" ", $fecha_y_hora_visita);
+        $fecha_visita = $fecha_explotada[0];
+        $hora_visita = $fecha_explotada[1];
+        //$fecha_visita = date("dmY", $fecha_visita); 
+
+        return view('grupos.edit', ['grupo' => $grupo, 'fecha_visita'=>$fecha_visita, 'hora_visita'=>$hora_visita, 'fecha_y_hora_visita'=>$fecha_y_hora_visita]); //Y la pasamos a la vista en una array
+        //return view('grupos.edit', compact('grupo')); //Forma alternativa si el nombre de la variable en que pasamos la info es el mismo que el que ya tenemos
     }
 
     /**
@@ -85,22 +99,27 @@ class GrupoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, Grupo $grupo)
     {
-        dump("Hola");
-        $grupo = Grupo::find($request->id);
+        $grupo = Grupo::find($grupo->id);
         $grupo->cantidadTotalVisitantes = $request->get('cantidad_total_visitantes');
         $grupo->Mujeres_Menores = $request->get('muj_men');
         $grupo->Mujeres_Jovenes = $request->get('muj_jov');
         $grupo->Mujeres_Adultas = $request->get('muj_adu');
         $grupo->Mujeres_Mayores = $request->get('muj_may');
-        $grupo->Hombres_Menores = $request->get('var_men');
-        $grupo->Hombres_Jovenes = $request->get('var_jov');
-        $grupo->Hombres_Adultos = $request->get('var_adu');
-        $grupo->Hombres_Mayores = $request->get('var_may');
-        $grupo->ProcedenciaInternacional = 0;
+        $grupo->Varones_Menores = $request->get('var_men');
+        $grupo->Varones_Jovenes = $request->get('var_jov');
+        $grupo->Varones_Adultos = $request->get('var_adu');
+        $grupo->Varones_Mayores = $request->get('var_may');
+        if($request->get('procedenciaInternacional')!=null){
+            $grupo->ProcedenciaInternacional = true;
+        }else{
+            $grupo->ProcedenciaInternacional = false;
+        }
         $grupo->LugarProcedencia = $request->get('procedencia');
+        $grupo->fecha_visita = $request->get('fecha_vis') . " " . $request->get('hora_vis');
         $grupo->update();
+        return redirect()->route('grupos.index');
     }
 
     /**
@@ -109,8 +128,9 @@ class GrupoController extends Controller
      * @param  \App\Models\Grupo  $grupo
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Grupo $grupo)
+    public function destroy($id)
     {
-        //
+        Grupo::destroy($id);
+        return redirect('/grupos');
     }
 }
