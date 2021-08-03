@@ -52,15 +52,16 @@ class GrupoController extends Controller
         $grupo->Varones_Jovenes = $request->get('var_jov');
         $grupo->Varones_Adultos = $request->get('var_adu');
         $grupo->Varones_Mayores = $request->get('var_may');
-        //$grupo->ProcedenciaInternacional = $request->get('procedenciaInternacional');
-        if($request->get('procedenciaInternacional')!=null){
+        if($request->has('procedenciaInternacional')){
+            //Checkbox checked
             $grupo->ProcedenciaInternacional = true;
         }else{
+            //Checkbox not checked
             $grupo->ProcedenciaInternacional = false;
         }
         $grupo->LugarProcedencia = $request->get('procedencia');
         $grupo->save();
-        return redirect('/grupos');
+        return redirect()->route('grupos.index');
     }
 
     /**
@@ -131,6 +132,7 @@ class GrupoController extends Controller
     public function destroy($id)
     {
         Grupo::destroy($id);
-        return redirect('/grupos');
+        return redirect()->route('grupos.index');
+
     }
 }

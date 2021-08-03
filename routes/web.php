@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GrupoController;
+use App\Http\Controllers\ProcedenciaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,6 +19,7 @@ use App\Http\Controllers\GrupoController;
 //3)el nombre de la ruta, para llamarla desde un controlador en los return view por ejemplo
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('main'); 
 Route::resource('grupos', GrupoController::class)->names('grupos');
+Route::resource('procedencias', ProcedenciaController::class)->names('procedencias');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Auth::routes();
 
