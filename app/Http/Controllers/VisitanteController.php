@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Visitante;
+use App\Models\Procedencia;
+
 use Illuminate\Http\Request;
 
 class VisitanteController extends Controller
@@ -14,7 +16,9 @@ class VisitanteController extends Controller
      */
     public function index()
     {
-        //
+        $visitantes = Visitante::orderBy('id', 'DESC')->get(); //De esta forma mostramos los registros ordenados por fecha de visita más reciente
+        return view('visitantes.index', ['listado' => $visitantes]);
+
     }
 
     /**
@@ -24,7 +28,10 @@ class VisitanteController extends Controller
      */
     public function create()
     {
-        //
+        $procedencias_internacionales = Procedencia::where('internacional', true)->get();
+        $procedencias_nacionales = Procedencia::where('internacional', false)->get();
+
+        return view('visitantes.create', ['listado_procedencias_internacionales' => $procedencias_internacionales, 'listado_procedencias_nacionales' => $procedencias_nacionales]);
     }
 
     /**
@@ -78,8 +85,9 @@ class VisitanteController extends Controller
      * @param  \App\Models\Visitante  $visitante
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Visitante $visitante)
+    public function destroy($id)
     {
-        //
+        Visitante::destroy($id);
+        return redirect()->route('visitantes.index');
     }
 }
