@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Grupo;
+use App\Models\Procedencia;
 use Illuminate\Http\Request;
 
 class GrupoController extends Controller
@@ -30,7 +31,10 @@ class GrupoController extends Controller
      */
     public function create()
     {
-        return view('grupos.create');
+        $procedencias_internacionales = Procedencia::where('internacional', true)->get();
+        $procedencias_nacionales = Procedencia::where('internacional', false)->get();
+
+        return view('grupos.create', ['listado_procedencias_internacionales' => $procedencias_internacionales, 'listado_procedencias_nacionales' => $procedencias_nacionales]);
     }
 
     /**

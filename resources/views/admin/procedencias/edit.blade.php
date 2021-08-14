@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row">
         <div class="col 12">
-            <form action="{{route('procedencias.update', $procedencia)}}" method="POST" id="formularioGrupos" name="formularioGrupos">
+            <form action="{{route('procedencias.update', $procedencia)}}" method="POST" id="formularioProcedencias" name="formularioProcedencias">
                 @csrf
                 {{method_field('PATCH')}}
                 <input type="hidden" id="id" value="{{isset($procedencia->id)?$procedencia->id:''}}">

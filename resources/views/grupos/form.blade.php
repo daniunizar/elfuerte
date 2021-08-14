@@ -1,3 +1,5 @@
+<input type="hidden" id="proc_inter_recu" name="proc_inter_recu" value="{{$listado_procedencias_internacionales}}">
+<input type="hidden" id="proc_nac_recu" name="proc_nac_recu" value="{{$listado_procedencias_nacionales}}">
 <div class="form-group">
     <label for="cantidad_total_visitantes">Cantidad Total de Visitantes</label>
     <input type="number" class="form-control" id="cantidad_total_visitantes" name="cantidad_total_visitantes" aria-describedby="totalHelp" min=0 value="{{isset($grupo->cantidadTotalVisitantes)?$grupo->cantidadTotalVisitantes:0}}">
@@ -55,16 +57,22 @@
     <input type="checkbox" class="form-check-input" id="procedenciaInternacional" name="procedenciaInternacional">
     @endif
     <label class="form-check-label" for="procedenciaInternacional">Procedencia Internacional</label>
+    
 
 </div>
 <div class="form-group">
     <label for="procedencia">Procedencia</label>
     <select class="form-control" id="procedencia" name="procedencia">
-    <option>Francia</option>
-    <option>Italia</option>
-    <option>Aragón</option>
-    <option>Madrid</option>
-    <option>Bilbao</option>
+    <optgroup label="Internacional" name="procedencia_inter" id="procedencia_inter"> 
+        @foreach($listado_procedencias_internacionales as $procedencia_internacional)
+            <option value="{{$procedencia_internacional->id}}">{{$procedencia_internacional->concepto}}</option>
+        @endforeach
+    </optgroup> 
+    <optgroup label="Nacional" name="procedencia_nacional" id="procedencia_nacional"> 
+        @foreach($listado_procedencias_nacionales as $procedencia_nacional)
+            <option value="{{$procedencia_nacional->id}}">{{$procedencia_nacional->concepto}}</option>
+        @endforeach
+    </optgroup> 
     </select>
 </div>
 <a href="{{ route('grupos.index') }}" class="btn btn-secondary">Cancelar</a> <!--Este enlace lleva al método index del controlador Grupos que retorna la vista grupos.index con el listado de grupos-->

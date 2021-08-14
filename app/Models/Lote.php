@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Grupo extends Model
+class Lote extends Model
 {
-    use HasFactory;
+    use HasFactory;   
     //Relación unos a muchos inversa
     public function visitante(){
         return $this->belongsTo('App\Models\Visitante');

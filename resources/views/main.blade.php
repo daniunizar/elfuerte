@@ -6,6 +6,6 @@
 <a href="#" class="badge badge-primary">Productos Promocionales</a>
 <a href="#" class="badge badge-primary">Consultas</a>
 <a href="#" class="badge badge-primary">Reservas</a>
-<a href="{{route('procedencias.index')}}" class="badge badge-primary">Administrador</a>
+<a href="{{route('panel_administrador')}}" class="badge badge-primary">Administrador</a>
 
 @endsection

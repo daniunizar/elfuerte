@@ -84,7 +84,16 @@ class ProcedenciaController extends Controller
      */
     public function update(Request $request, Procedencia $procedencia)
     {
-        //
+        $procedencia = Procedencia::find($procedencia->id);
+        $procedencia->concepto=$request->get('lugar_procedencia');
+        if($request->get('procedencia_internacional')!=null){
+            $procedencia->internacional = true;
+        }else{
+            $procedencia->internacional = false;
+        }
+        $procedencia->update();
+        return redirect()->route('procedencias.index');
+
     }
 
     /**
