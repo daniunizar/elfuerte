@@ -15,11 +15,13 @@ class SexoSeeder extends Seeder
     public function run()
     {
         $sexo = new Sexo();
-        $sexo->concepto='hombre';
+        $sexo->concepto='mujer';
+        $sexo->orden=1;
         $sexo->save();
 
         $sexo = new Sexo();
-        $sexo->concepto='mujer';
+        $sexo->concepto='hombre';
+        $sexo->orden=2;
         $sexo->save();
     }
 }

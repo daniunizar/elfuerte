@@ -4,22 +4,26 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
 class Visitante extends Model
 {
     use HasFactory;
 
+    protected $guarded =[]; //Introducir los campos que no queremos rellenar por asignación masiva
+    //Para hacerlo en positivo usar fillable
+    
     //relaciones uno a muchos
-    public function sexos(){
-        return $this->hasMany('App\Models\Sexo');
+    public function sexo(){
+        //return $this->belongsTo('App\Models\Sexo');
+        //$sexo = Sexo::where('id', $this->id)->first();
+        return $this->belongsTo('App\Models\Sexo'); //seguido de clave foránea si es diferente a sexo_id y de clave local si es diferente a id
     }
-    public function edads(){
-        return $this->hasMany('App\Models\Edad');
+    public function edad(){
+        return $this->belongsTo('App\Models\Edad');
     }
-    public function procedencias(){
-        return $this->hasMany('App\Models\Procedencia');
+    public function procedencia(){
+        return $this->belongsTo('App\Models\Procedencia');
     }
-    public function lotes(){
-        return $this->hasMany('App\Models\Lote');
+    public function lote(){
+        return $this->belongsTo('App\Models\Lote');
     }
 }

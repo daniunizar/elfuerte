@@ -18,6 +18,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Orden de aparición</th>
                     <th scope="col">Sexo</th>
                     <th scope="col" colspan="2">Acciones</th>
                 </tr>
@@ -26,6 +27,7 @@
                 @foreach($listado as $sexo)
                 <tr>
                     <th scope="row">{{$sexo->id}}</th>
+                    <td>{{$sexo->orden}}</td>
                     <td>{{$sexo->concepto}}</td>
                     <td>
                         <a href="{{route('sexos.edit', $sexo->id)}}" class="btn btn-warning">Editar</a>    

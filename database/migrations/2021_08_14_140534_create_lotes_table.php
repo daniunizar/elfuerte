@@ -15,7 +15,7 @@ class CreateLotesTable extends Migration
     {
         Schema::create('lotes', function (Blueprint $table) {
             $table->id();
-            $table->string('concepto');
+            $table->timestampTz('fecha');
             $table->timestampsTz();
         });
     }

@@ -19,6 +19,7 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Orden de aparición</th>
                     <th scope="col">Rango de Edad</th>
                     <th scope="col" colspan="2">Acciones</th>
                 </tr>
@@ -27,6 +28,7 @@
                 @foreach($listado as $edad)
                 <tr>
                     <th scope="row">{{$edad->id}}</th>
+                    <td>{{$edad->orden}}</td>
                     <td>{{$edad->concepto}}</td>
                     <td>
                         <a href="{{route('edads.edit', $edad->id)}}" class="btn btn-warning">Editar</a>    

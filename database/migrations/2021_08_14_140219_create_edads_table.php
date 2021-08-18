@@ -16,6 +16,7 @@ class CreateEdadsTable extends Migration
         Schema::create('edads', function (Blueprint $table) {
             $table->id();
             $table->string('concepto');
+            $table->integer('orden');
             $table->timestampsTz();
         });
     }

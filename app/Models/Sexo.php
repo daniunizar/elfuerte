@@ -12,7 +12,7 @@ class Sexo extends Model
     //Para hacerlo en positivo usar fillable
     
     //Relación unos a muchos inversa
-    public function visitante(){
-        return $this->belongsTo('App\Models\Visitante');
+    public function visitantes(){
+        return $this->hasMany('App\Models\Visitante'); //se puede seguir de la clave foránea si es diferente a visitante_id y de la local si es diferente a id
     }
 }

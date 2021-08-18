@@ -12,7 +12,7 @@ class Edad extends Model
     //Para hacerlo en positivo usar fillable
     
     //Relación unos a muchos inversa
-    public function visitante(){
-        return $this->belongsTo('App\Models\Visitante');
+    public function visitantes(){
+        return $this->hasMany('App\Models\Visitante');
     }
 }

@@ -18,10 +18,11 @@
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Lote</th>
                     <th scope="col">Sexo</th>
                     <th scope="col">Edad</th>
                     <th scope="col">Procedencia</th>
-                    <th scope="col">Lote</th>
                     <th scope="col" colspan="2">Acciones</th>
                 </tr>
             </thead>
@@ -29,12 +30,12 @@
                 @foreach($listado as $visitante)
                 <tr>
                     <th scope="row">{{$visitante->id}}</th>
-                    <td>{{$grupo->sexo}}</td>
-                    <td>{{$grupo->edad}}</td>
-                    <td>{{$grupo->procedencia}}</td>
-                    <td>{{$grupo->lote}}</td>
+                    <td>{{$visitante->lote->fecha}}</td>
+                    <td>{{$visitante->lote_id}}</td>
+                    <td>{{$visitante->sexo->concepto}}</td>
+                    <td>{{$visitante->edad->concepto}}</td>
+                    <td>{{$visitante->procedencia->concepto}}</td>
                     <td>
-                        <!-- <a href="{{url('/grupos/'.$grupo->id.'/edit')}}" class="btn btn-warning">Editar</a>     -->
                         <a href="{{route('visitantes.edit', $visitante->id)}}" class="btn btn-warning">Editar</a>    
                     <td>
                         <form action="{{route('visitantes.destroy', $visitante->id)}}" method='POST'>

@@ -9,7 +9,7 @@ class Lote extends Model
 {
     use HasFactory;   
     //Relación unos a muchos inversa
-    public function visitante(){
-        return $this->belongsTo('App\Models\Visitante');
+    public function visitantes(){
+        return $this->hasMany('App\Models\Visitante');
     }
 }

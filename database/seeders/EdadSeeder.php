@@ -16,15 +16,19 @@ class EdadSeeder extends Seeder
     {
         $edad = new Edad();
         $edad->concepto='menor';
+        $edad->orden=1;
         $edad->save();
         $edad = new Edad();
         $edad->concepto='jóven';
+        $edad->orden=2;
         $edad->save();
         $edad = new Edad();
         $edad->concepto='adulto';
+        $edad->orden=3;
         $edad->save();
         $edad = new Edad();
         $edad->concepto='mayor';
+        $edad->orden=4;
         $edad->save();
     }
 }
