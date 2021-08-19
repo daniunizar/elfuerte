@@ -15,6 +15,11 @@
                 <input type="number" id="lote_id" name="lote_id" value="{{isset($visitante->lote_id)?$visitante->lote_id:''}}">
                 </div>
                 <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" id="dia" name="dia" value="{{isset($fecha_visita)?$fecha_visita:''}}">
+                <input type="time" id="hora" name="hora" value="{{isset($hora_visita)?$hora_visita:''}}">
+                </div>
+                <div class="form-group">
                 <label for="sexo_id">Sexo</label>
                 <select id="sexo_id" name="sexo_id" value="{{isset($visitante->sexo_id)?$visitante->sexo->concepto:''}}">
                 @foreach($sexos as $sexo)

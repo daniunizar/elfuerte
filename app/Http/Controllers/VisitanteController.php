@@ -100,8 +100,21 @@ class VisitanteController extends Controller
         $procedencias_internacionales = Procedencia::where('internacional', true)->get();
         $procedencias_nacionales = Procedencia::where('internacional', false)->get();
         $visitante = Visitante::findOrFail($id);
+        $fecha_visita = $visitante->lote->fecha; //aaaa-mm-dd hh:mm:ss
+        $fecha_visita_explotada = explode(' ',$fecha_visita);
+        $fecha_aislada = $fecha_visita_explotada[0];//aaaa-mm-dd
+        $hora_aislada = $fecha_visita_explotada[1];//hh:mm:ss
+        $fecha_explotada = explode('-', $fecha_aislada); 
+        $hora_explotada = explode(':', $hora_aislada); 
+        $anyo = $fecha_explotada[0];
+        $mes = $fecha_explotada[1];
+        $dia = $fecha_explotada[2];
+        $hora = $hora_explotada[0];
+        $minutos = $hora_explotada[1];
+        $hora_formateada = $hora .":". $minutos;
+
         //$visitante = $visitante->concepto;
-        return view('visitantes.edit', ['visitante' => $visitante, 'sexos'=>$sexos, 'edads'=>$edads, 'listado_procedencias_internacionales' => $procedencias_internacionales, 'listado_procedencias_nacionales' => $procedencias_nacionales]); 
+        return view('visitantes.edit', ['visitante' => $visitante, 'sexos'=>$sexos, 'edads'=>$edads, 'listado_procedencias_internacionales' => $procedencias_internacionales, 'listado_procedencias_nacionales' => $procedencias_nacionales, 'fecha_visita'=>$fecha_aislada, 'hora_visita'=>$hora_formateada]); 
     }
 
     /**
@@ -113,7 +126,15 @@ class VisitanteController extends Controller
      */
     public function update(Request $request, Visitante $visitante)
     {
-        $visitante->update($request->all());
+        //$visitante->update($request->all());
+        $visitante = Visitante::find($visitante->id);
+        $visitante->sexo_id = $request->sexo_id;
+        $visitante->edad_id = $request->edad_id;
+        $visitante->procedencia_id = $request->procedencia_id;
+        $fecha = $request->dia . " " . $request->hora.":00";
+        $visitante->lote->fecha = $fecha;
+        $visitante->update();
+        $visitante->lote->update();
         return redirect()->route('visitantes.index');
     }
 
