@@ -149,4 +149,52 @@ class VisitanteController extends Controller
         Visitante::destroy($id);
         return redirect()->route('visitantes.index');
     }
+
+    public function informar(Request $request){
+        $inicio= $request->inicio;
+        $final_parcial = $request->final;
+        $final=$final_parcial . ' 23_59:00';
+        $resultado_sexos = $this->obtenerInformeSexos($inicio, $final);
+        $resultado_edads = $this->obtenerInformeEdad($inicio, $final);
+        // $sexos = Sexo::all();
+        // $edads = Edad::all();
+        // $procedencias = Procedencia::all();
+        // $visitantes = Visitante::all();
+        // $seleccion = Visitante::join('lotes', 'lotes.id', '=', 'visitantes.lote_id')
+        // ->select('*')
+        // ->where("lotes.fecha", ">=", $inicio)
+        // ->where("lotes.fecha", "<=", $final)
+        // ->get(); //parámetros: tabla2, tabla2.campotabla, comparador, tabla1.campotabla
+        // dd($seleccion);
+        // return view('informes.resultado', ['sexos'=>$sexos, 'edads'=>$edads, 'procedencias'=>$procedencias, 'visitantes' => $visitantes, ]); 
+        return view('informes.resultado', ['resultado_sexos'=>$resultado_sexos, 'resultado_edads'=>$resultado_edads]); 
+    }
+
+    public function obtenerInformeSexos($inicio, $final){
+        $sexos = Sexo::all();
+        $aux = [];
+        foreach($sexos as $sexo){
+            $resultado = Visitante::where('sexo_id', $sexo->id)
+            ->join('lotes', 'lotes.id', '=', 'visitantes.lote_id')
+            ->where("lotes.fecha", ">=", $inicio)
+            ->where("lotes.fecha", "<=", $final)
+            ->count();
+            $aux[$sexo->concepto]=$resultado;
+        }
+        return $aux;
+    }
+    public function obtenerInformeEdad($inicio, $final){
+        $edads = Edad::all();
+        $aux = [];
+        foreach($edads as $edad){
+            $resultado = Visitante::where('edad_id', $edad->id)
+            ->join('lotes', 'lotes.id', '=', 'visitantes.lote_id')
+            ->where("lotes.fecha", ">=", $inicio)
+            ->where("lotes.fecha", "<=", $final)
+            ->count();
+            $aux[$edad->concepto]=$resultado;
+        }
+        return $aux;
+    }
+
 }

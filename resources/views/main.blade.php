@@ -8,5 +8,6 @@
 <a href="#" class="badge badge-primary">Consultas</a>
 <a href="#" class="badge badge-primary">Reservas</a>
 <a href="{{route('panel_administrador')}}" class="badge badge-primary">Administrador</a>
+<a href="{{route('informes')}}" class="badge badge-primary">Informes</a>
 
 @endsection

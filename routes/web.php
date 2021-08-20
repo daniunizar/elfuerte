@@ -29,5 +29,8 @@ Route::resource('sexos', SexoController::class)->names('sexos');
 Route::resource('visitantes', VisitanteController::class)->names('visitantes');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::view('panel_administrador', 'admin.index')->name('panel_administrador'); //contenido estático. No consultamos la bbdd, sólo qeremos mostrar una vista. Espera 2 parámetros, url y nombre de la vista desde view
+Route::view('informes', 'informes.index')->name('informes'); //contenido estático. No consultamos la bbdd, sólo qeremos mostrar una vista. Espera 2 parámetros, url y nombre de la vista desde view
+// Route::get('emitirinformes', array('as'=>'visitantes.informar', 'uses'=>'App\Http\Controllers\VisitanteController@informar'));
+Route::get('emitirinformes', array('as'=>'informes.informar', 'uses'=>'App\Http\Controllers\InformeController@informar'));
 Auth::routes();
 
