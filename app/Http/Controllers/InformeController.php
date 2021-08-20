@@ -31,7 +31,7 @@ class InformeController extends Controller
     }
 
     public function obtenerInformeSexo($inicio, $final){
-        $sexos = Sexo::all();
+        $sexos = Sexo::orderBy('orden', 'ASC')->get();
         $aux = [];
         foreach($sexos as $sexo){
             $resultado = Visitante::where('sexo_id', $sexo->id)
@@ -44,7 +44,7 @@ class InformeController extends Controller
         return $aux;
     }
     public function obtenerInformeEdad($inicio, $final){
-        $edads = Edad::all();
+        $edads = Edad::orderBy('orden', 'ASC')->get();
         $aux = [];
         foreach($edads as $edad){
             $resultado = Visitante::where('edad_id', $edad->id)
@@ -58,8 +58,8 @@ class InformeController extends Controller
     }
 
     public function obtenerInformeSexoEdad($inicio, $final){
-        $sexos = Sexo::all();
-        $edads = Edad::all();
+        $sexos = Sexo::orderBy('orden', 'ASC')->get();
+        $edads = Edad::orderBy('orden', 'ASC')->get();
         $aux = [];
         foreach($sexos as $sexo){
             foreach($edads as $edad){
@@ -96,7 +96,7 @@ class InformeController extends Controller
     }
 
     public function obtenerInformeProcedenciaNacional($inicio, $final){
-        $procedencias = Procedencia::where('internacional', 0)->get();
+        $procedencias = Procedencia::orderBy('concepto', 'ASC')->where('internacional', 0)->get();
         $aux = [];
         foreach($procedencias as $procedencia){
             $resultado = Visitante::join('lotes', 'lotes.id', '=', 'visitantes.lote_id')
@@ -111,7 +111,7 @@ class InformeController extends Controller
     }
     
     public function obtenerInformeProcedenciaInterNacional($inicio, $final){
-        $procedencias = Procedencia::where('internacional', 1)->get();
+        $procedencias = Procedencia::orderBy('concepto', 'ASC')->where('internacional', 1)->get();
         $aux = [];
         foreach($procedencias as $procedencia){
             $resultado = Visitante::join('lotes', 'lotes.id', '=', 'visitantes.lote_id')
